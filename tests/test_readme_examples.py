@@ -1,7 +1,7 @@
 import os
+from pathlib import Path
 import re
 import sys
-from pathlib import Path
 
 README_PATH = Path(__file__).resolve().parent.parent / "README.md"
 
@@ -33,9 +33,7 @@ def test_readme_python_examples_run():
             exec(block, globals_dict)
 
     except Exception as e:
-        raise AssertionError(
-            f"README python block #{idx} failed:\n{block}"
-        ) from e
+        raise AssertionError(f"README python block #{idx} failed:\n{block}") from e
 
     finally:
         os.chdir(old_cwd)
