@@ -103,11 +103,24 @@ def plot_covariance(
     cax = ax.imshow(matrix)
     fig.colorbar(cax)
 
+    # if show_tickers:
+    #     ax.set_xticks(np.arange(0, matrix.shape[0], 1))
+    #     ax.set_xticklabels(matrix.index)
+    #     ax.set_yticks(np.arange(0, matrix.shape[0], 1))
+    #     ax.set_yticklabels(matrix.index)
+    #     plt.xticks(rotation=90)
     if show_tickers:
         ax.set_xticks(np.arange(0, matrix.shape[0], 1))
-        ax.set_xticklabels(matrix.index)
+        # Handle both DataFrame and ndarray for tick labels
+        if hasattr(matrix, "index"):
+            labels = matrix.index
+        else:
+            # For numpy array, create generic labels
+            labels = [f"Asset {i + 1}" for i in range(matrix.shape[0])]
+
+        ax.set_xticklabels(labels)
         ax.set_yticks(np.arange(0, matrix.shape[0], 1))
-        ax.set_yticklabels(matrix.index)
+        ax.set_yticklabels(labels)
         plt.xticks(rotation=90)
 
     # Optional: overlay numeric values on each cell
